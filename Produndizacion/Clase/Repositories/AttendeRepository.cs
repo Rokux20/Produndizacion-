@@ -9,7 +9,6 @@ namespace Clase.Repositories
         List<Attendee> GetAll();
         List<Attendee> GetByFirstName(int id);
 
-
         void CreateAttendee (Attendee attendee);
         void UpdateAttendee (int id, Attendee attendee);
         void DeleteAttendee (int id);
