@@ -15,7 +15,6 @@ namespace Clase.Context
         public DbSet<RoomAttendeeRegistration> roomAttendeeRegistration {  get; set; }
         public DbSet<Rooms> rooms { get; set; }
 
-
         public TypesDevicesDbContext(DbContextOptions options) : base(options) 
         { 
         

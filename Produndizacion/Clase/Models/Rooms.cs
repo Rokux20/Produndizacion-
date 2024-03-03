@@ -13,6 +13,5 @@ namespace Clase.Models
         public int MaxCapacity { get; set; }
 
         public List<RoomAttendeeRegistration> roomAttendeeRegistration { get; set; }
-
     }
 }
