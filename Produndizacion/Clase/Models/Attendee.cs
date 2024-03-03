@@ -9,7 +9,6 @@ namespace Clase.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdAttendee { get; set; }
 
-
         public string First_Name { get; set; }
         public string Last_Name { get; set; }
         public string Email { get; set; }
