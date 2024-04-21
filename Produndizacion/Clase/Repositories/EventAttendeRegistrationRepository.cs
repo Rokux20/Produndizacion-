@@ -1,43 +1,58 @@
-﻿using Clase.Models;
+﻿using Clase.Context;
+using Clase.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Clase.Repositories
 {
 
     public interface IEventAttendeRegistrationRepository
-    {
-
-        List<Event_Attendee_Registration> GetAll();
-        List<Event_Attendee_Registration> Get(int id);
-
-
-        void CreateEventAttendeRegistration(Event_Attendee_Registration eventAttendeeRegistration);
-        void UpdateEventAttendeRegistration(int id, Event_Attendee_Registration eventAttendeeRegistration);
-        void DeleteEventAttendeRegistration(int id);
+    {   
+        Task<List<Event_Attendee_Registration>> GetAll();
+        Task<Event_Attendee_Registration> GetById(int id);
+        Task<Event_Attendee_Registration> CreateEventAttendeRegistration(int IdAttendee, int IdEvents, DateTime RegistrationDate);
+        Task<Event_Attendee_Registration> UpdateEventAttendeRegistration(Event_Attendee_Registration event_Attendee_Registration);
+        Task<Event_Attendee_Registration> DeleteEventAttendeRegistration(Event_Attendee_Registration event_Attendee_Registration);
     }
 
-    public class EventAttendeRegistrationRepository: IEventAttendeRegistrationRepository
+    public class EventAttendeRegistrationRepository : IEventAttendeRegistrationRepository
     {
-        public void CreateEventAttendeRegistration(Event_Attendee_Registration eventAttendeeRegistration)
+        private readonly ProyectbContext _db;
+
+        public EventAttendeRegistrationRepository(ProyectbContext db)
         {
-            throw new NotImplementedException();
+            _db = db;
         }
 
-        public void DeleteEventAttendeRegistration(int id)
+       public async Task<Event_Attendee_Registration> CreateEventAttendeRegistration(int IdAttendee, int IdEvents, DateTime RegistrationDate)
         {
+            Event_Attendee_Registration newEventAttendeeRegistration = new Event_Attendee_Registration
+            {
+                IdAttendee = IdAttendee,
+                IdEvents = IdEvents,
+                RegistrationDate = RegistrationDate
+            };
+
+            await _db.event_Attendee_Registration.AddAsync(newEventAttendeeRegistration);
+            _db.SaveChanges();
+
+            return newEventAttendeeRegistration;
+        }   
+
+        public async Task<List<Event_Attendee_Registration>> GetAll()
+        {
+            return await _db.event_Attendee_Registration.ToListAsync();
+        }
+        public async Task<Event_Attendee_Registration> GetById(int id)
+        {
+            return await _db.event_Attendee_Registration.FirstOrDefaultAsync(x => x.IdRegistration == id);
+        }
+        public async Task<Event_Attendee_Registration> UpdateEventAttendeRegistration(Event_Attendee_Registration event_Attendee_Registration)
+        {
+            _db.event_Attendee_Registration.Update(event_Attendee_Registration);
+            await _db.SaveChangesAsync();
             throw new NotImplementedException();
         }
-
-        public List<Event_Attendee_Registration> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Event_Attendee_Registration> Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateEventAttendeRegistration(int id, Event_Attendee_Registration eventAttendeeRegistration)
+        public async Task<Event_Attendee_Registration> DeleteEventAttendeRegistration(Event_Attendee_Registration event_Attendee_Registration)
         {
             throw new NotImplementedException();
         }
