@@ -4,6 +4,7 @@ using Clase.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Clase.Migrations
 {
     [DbContext(typeof(ProyectbContext))]
-    partial class ProyectbContextModelSnapshot : ModelSnapshot
+    [Migration("20240421051843_ActualizacionCRUD2.0")]
+    partial class ActualizacionCRUD20
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,7 +64,20 @@ namespace Clase.Migrations
                     b.Property<int>("IdOrganizer")
                         .HasColumnType("int");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("event_OrganizersIdOrganizer")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("eventsIdEvents")
+                        .HasColumnType("int");
+
                     b.HasKey("IdEventOrg");
+
+                    b.HasIndex("event_OrganizersIdOrganizer");
+
+                    b.HasIndex("eventsIdEvents");
 
                     b.ToTable("eventOrganizerAssociation");
                 });
@@ -83,7 +99,20 @@ namespace Clase.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("attendeeIdAttendee")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("eventsIdEvents")
+                        .HasColumnType("int");
+
                     b.HasKey("IdRegistration");
+
+                    b.HasIndex("attendeeIdAttendee");
+
+                    b.HasIndex("eventsIdEvents");
 
                     b.ToTable("event_Attendee_Registration");
                 });
@@ -107,6 +136,9 @@ namespace Clase.Migrations
 
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
 
                     b.HasKey("IdOrganizer");
 
@@ -133,6 +165,9 @@ namespace Clase.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("IdEvents");
 
                     b.ToTable("events");
@@ -155,7 +190,20 @@ namespace Clase.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("attendeeIdAttendee")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("roomsIdRoom")
+                        .HasColumnType("int");
+
                     b.HasKey("IdAttendeeR");
+
+                    b.HasIndex("attendeeIdAttendee");
+
+                    b.HasIndex("roomsIdRoom");
 
                     b.ToTable("roomAttendeeRegistration");
                 });
@@ -174,9 +222,74 @@ namespace Clase.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("IdRoom");
 
                     b.ToTable("rooms");
+                });
+
+            modelBuilder.Entity("Clase.Models.EventOrganizerAssociation", b =>
+                {
+                    b.HasOne("Clase.Models.Event_Organizers", "event_Organizers")
+                        .WithMany("eventOrganizerAssociation")
+                        .HasForeignKey("event_OrganizersIdOrganizer");
+
+                    b.HasOne("Clase.Models.Events", "events")
+                        .WithMany("eventOrganizerAssociation")
+                        .HasForeignKey("eventsIdEvents");
+
+                    b.Navigation("event_Organizers");
+
+                    b.Navigation("events");
+                });
+
+            modelBuilder.Entity("Clase.Models.Event_Attendee_Registration", b =>
+                {
+                    b.HasOne("Clase.Models.Attendee", "attendee")
+                        .WithMany()
+                        .HasForeignKey("attendeeIdAttendee");
+
+                    b.HasOne("Clase.Models.Events", "events")
+                        .WithMany("event_Attendee_Registration")
+                        .HasForeignKey("eventsIdEvents");
+
+                    b.Navigation("attendee");
+
+                    b.Navigation("events");
+                });
+
+            modelBuilder.Entity("Clase.Models.RoomAttendeeRegistration", b =>
+                {
+                    b.HasOne("Clase.Models.Attendee", "attendee")
+                        .WithMany()
+                        .HasForeignKey("attendeeIdAttendee");
+
+                    b.HasOne("Clase.Models.Rooms", "rooms")
+                        .WithMany("roomAttendeeRegistration")
+                        .HasForeignKey("roomsIdRoom");
+
+                    b.Navigation("attendee");
+
+                    b.Navigation("rooms");
+                });
+
+            modelBuilder.Entity("Clase.Models.Event_Organizers", b =>
+                {
+                    b.Navigation("eventOrganizerAssociation");
+                });
+
+            modelBuilder.Entity("Clase.Models.Events", b =>
+                {
+                    b.Navigation("eventOrganizerAssociation");
+
+                    b.Navigation("event_Attendee_Registration");
+                });
+
+            modelBuilder.Entity("Clase.Models.Rooms", b =>
+                {
+                    b.Navigation("roomAttendeeRegistration");
                 });
 #pragma warning restore 612, 618
         }

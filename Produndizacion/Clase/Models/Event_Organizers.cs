@@ -14,8 +14,7 @@ namespace Clase.Models
         public string Email { get; set; }
         public string  Phone { get; set;}
 
-        public List<EventOrganizerAssociation> eventOrganizerAssociation { get; set; }
-
+        public bool deleted = false;
 
     }
 }

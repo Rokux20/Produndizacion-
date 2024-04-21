@@ -48,11 +48,14 @@ namespace Clase.Repositories
         {
             _db.roomAttendeeRegistration.Update(roomAttendeeRegistration);
             await _db.SaveChangesAsync();
-            throw new NotImplementedException();
+            return roomAttendeeRegistration;
         }
         public async Task<RoomAttendeeRegistration> DeleteRoomAttendeeRegistration(RoomAttendeeRegistration roomAttendeeRegistration)
         {
-            throw new NotImplementedException();
+            roomAttendeeRegistration.deleted = true;
+            _db.roomAttendeeRegistration.Update(roomAttendeeRegistration);
+            await _db.SaveChangesAsync();
+            return roomAttendeeRegistration;
         }
     }   
     

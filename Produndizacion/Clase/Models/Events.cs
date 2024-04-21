@@ -14,10 +14,7 @@ namespace Clase.Models
         public DateTime Date { get; set; }
         public string Description { get; set; }
         public int MaxCapacity { get; set; }
-
-        public List<Event_Attendee_Registration> event_Attendee_Registration { get; set; }
-        public List<EventOrganizerAssociation>  eventOrganizerAssociation { get; set; }
-
+        public bool deleted = false;
 
     }
 }

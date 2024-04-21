@@ -31,5 +31,33 @@ namespace Clase.Controllers
             }
             return Ok(eventOrganizerAssociation);
         }
+        [HttpPost]
+        public async Task<ActionResult<EventOrganizerAssociation>> CreateEventOrganizerAssociation([FromBody] EventOrganizerAssociation eventOrganizerAssociation)
+        {
+            return Ok(await _eventOrganizerAssociationService.CreateEventOrganizerAssociation(eventOrganizerAssociation.IdEvents, eventOrganizerAssociation.IdOrganizer));
+        }
+        [HttpPut("{id}")]
+        public async Task<ActionResult<EventOrganizerAssociation>> UpdateEventOrganizerAssociation(int id, [FromBody] EventOrganizerAssociation eventOrganizerAssociation)
+        {
+            try
+            {
+                return Ok(await _eventOrganizerAssociationService.UpdateEventOrganizerAssociation(id, eventOrganizerAssociation.IdEvents, eventOrganizerAssociation.IdOrganizer));
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<EventOrganizerAssociation>> DeleteEventOrganizerAssociation(int id)
+        {
+            var eventOrganizerAssociation = await _eventOrganizerAssociationService.DeleteEventOrganizerAssociation(id);
+            if (eventOrganizerAssociation == null)
+            {
+                return NotFound();
+            }
+            return Ok(eventOrganizerAssociation);
+        }
+
     }
 }

@@ -29,6 +29,35 @@ namespace Clase.Controllers
             }
             return Ok(attendee);
         }
-        
+        [HttpPost]
+        public async Task<ActionResult<Attendee>> CreateAttendee([FromBody] Attendee attendee)
+        {
+            return Ok(await _attendeeService.CreateAttendee(attendee.First_Name, attendee.Last_Name, attendee.Email, attendee.Phone));
+        }
+        [HttpPut("{attendeeId}")]
+        public async Task<ActionResult<Attendee>> UpdateAttendee(int attendeeId, [FromBody] Attendee attendee)
+        {
+            try
+            {
+                return Ok(await _attendeeService.UpdateAttendee(attendeeId, attendee.First_Name, attendee.Last_Name, attendee.Email, attendee.Phone));
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+        [HttpDelete("{attendeeId}")]
+        public async Task<ActionResult<Attendee>> DeleteAttendee(int attendeeId)
+        {
+            var attendee = await _attendeeService.DeleteAttendee(attendeeId);
+            if (attendee == null)
+            {
+                return NotFound();
+            }
+            return Ok(attendee);
+        }
+
+
+
     }
 }

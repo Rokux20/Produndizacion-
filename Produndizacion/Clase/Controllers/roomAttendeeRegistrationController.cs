@@ -31,5 +31,33 @@ namespace Clase.Controllers
             }
             return Ok(roomAttendeeRegistration);
         }
+        [HttpPost]
+        public async Task<ActionResult<RoomAttendeeRegistration>> CreateRoomAttendeeRegistration([FromBody] RoomAttendeeRegistration roomAttendeeRegistration)
+        {
+            return Ok(await _roomAttendeeRegistrationService.CreateRoomAttendeeRegistration(roomAttendeeRegistration.IdAttendee, roomAttendeeRegistration.IdRoom, roomAttendeeRegistration.RegistrationDate));
+        }
+        [HttpPut("{id}")]
+        public async Task<ActionResult<RoomAttendeeRegistration>> UpdateRoomAttendeeRegistration(int id, [FromBody] RoomAttendeeRegistration roomAttendeeRegistration)
+        {
+            try
+            {
+                return Ok(await _roomAttendeeRegistrationService.UpdateRoomAttendeeRegistration(id, roomAttendeeRegistration.IdAttendee, roomAttendeeRegistration.IdRoom, roomAttendeeRegistration.RegistrationDate));
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+        [HttpDelete("{id}")]    
+        public async Task<ActionResult<RoomAttendeeRegistration>> DeleteRoomAttendeeRegistration(int id)
+        {
+            var roomAttendeeRegistration = await _roomAttendeeRegistrationService.DeleteRoomAttendeeRegistration(id);
+            if (roomAttendeeRegistration == null)
+            {
+                return NotFound();
+            }
+            return Ok(roomAttendeeRegistration);
+        }
+
     }
-}
+}   

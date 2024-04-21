@@ -10,13 +10,13 @@ namespace Clase.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdRegistration { get; set; }
 
+        [ForeignKey("IdAttendee")]  // Añadir esta anotación para configurar la relación con Attendee
         public int IdAttendee { get; set; }
 
-        public Attendee attendee { get; set; } /// llave foranea  de Attendee
-
+        [ForeignKey("IdEvents")]  // Añadir esta anotación para configurar la relación con Attendee
         public int IdEvents { get;  set; }
-        
-        public Events events { get; set; }  //llave foranea de Events
+
+        public bool deleted = false;
 
         public DateTime RegistrationDate { get; set; }
     }

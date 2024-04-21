@@ -4,6 +4,7 @@ using Clase.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Clase.Migrations
 {
     [DbContext(typeof(ProyectbContext))]
-    partial class ProyectbContextModelSnapshot : ModelSnapshot
+    [Migration("20240421053511_ActualizacionRQUEST")]
+    partial class ActualizacionRQUEST
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,13 +58,21 @@ namespace Clase.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEventOrg"));
 
+                    b.Property<int?>("Event_OrganizersIdOrganizer")
+                        .HasColumnType("int");
+
                     b.Property<int>("IdEvents")
                         .HasColumnType("int");
 
                     b.Property<int>("IdOrganizer")
                         .HasColumnType("int");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("IdEventOrg");
+
+                    b.HasIndex("Event_OrganizersIdOrganizer");
 
                     b.ToTable("eventOrganizerAssociation");
                 });
@@ -82,6 +93,9 @@ namespace Clase.Migrations
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
 
                     b.HasKey("IdRegistration");
 
@@ -108,6 +122,9 @@ namespace Clase.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("IdOrganizer");
 
                     b.ToTable("event_Organizers");
@@ -133,6 +150,9 @@ namespace Clase.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("IdEvents");
 
                     b.ToTable("events");
@@ -155,6 +175,9 @@ namespace Clase.Migrations
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("IdAttendeeR");
 
                     b.ToTable("roomAttendeeRegistration");
@@ -174,9 +197,24 @@ namespace Clase.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("deleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("IdRoom");
 
                     b.ToTable("rooms");
+                });
+
+            modelBuilder.Entity("Clase.Models.EventOrganizerAssociation", b =>
+                {
+                    b.HasOne("Clase.Models.Event_Organizers", null)
+                        .WithMany("eventOrganizerAssociation")
+                        .HasForeignKey("Event_OrganizersIdOrganizer");
+                });
+
+            modelBuilder.Entity("Clase.Models.Event_Organizers", b =>
+                {
+                    b.Navigation("eventOrganizerAssociation");
                 });
 #pragma warning restore 612, 618
         }
