@@ -31,5 +31,33 @@ namespace Clase.Controllers
             }
             return Ok(rooms);
         }
+        [HttpPost]
+        public async Task<ActionResult<Rooms>> CreateRoom([FromBody] Rooms rooms)
+        {
+            return Ok(await _roomsService.CreateRoom(rooms.Name, rooms.MaxCapacity));
+        }
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Rooms>> UpdateRoom(int id, [FromBody] Rooms rooms)
+        {
+            try
+            {
+                return Ok(await _roomsService.UpdateRoom(id, rooms.Name, rooms.MaxCapacity));
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Rooms>> DeleteRoom(Rooms  room)
+        {
+            var rooms = await _roomsService.DeleteRoom(room);
+            if (rooms == null)
+            {
+                return NotFound();
+            }
+            return Ok(rooms);
+        }
+
     }
 }

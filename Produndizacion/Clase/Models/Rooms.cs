@@ -11,7 +11,7 @@ namespace Clase.Models
         public int IdRoom { get; set; }
         public string  Name { get; set; }
         public int MaxCapacity { get; set; }
+        public bool deleted = false;
 
-        public List<RoomAttendeeRegistration> roomAttendeeRegistration { get; set; }
     }
 }

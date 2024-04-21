@@ -31,5 +31,32 @@ namespace Clase.Controllers
             }
             return Ok(events);
         }
+        [HttpPost]
+        public async Task<ActionResult<Events>> CreateEvent([FromBody] Events events)
+        {
+            return Ok(await _eventsService.CreateEvent(events.Name, events.Description, events.Date, events.MaxCapacity));
+        }
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Events>> UpdateEvent(int id, [FromBody] Events events)
+        {
+            try
+            {
+                return Ok(await _eventsService.UpdateEvent(id, events.Name, events.Description, events.Date, events.MaxCapacity));
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Events>> DeleteEvent(int id)
+        {
+            var events = await _eventsService.DeleteEvent(id);
+            if (events == null)
+            {
+                return NotFound();
+            }
+            return Ok(events);
+        }
     }
 }

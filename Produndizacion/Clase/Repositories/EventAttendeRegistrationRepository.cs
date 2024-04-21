@@ -50,12 +50,17 @@ namespace Clase.Repositories
         {
             _db.event_Attendee_Registration.Update(event_Attendee_Registration);
             await _db.SaveChangesAsync();
-            throw new NotImplementedException();
+            return event_Attendee_Registration;
+            
         }
         public async Task<Event_Attendee_Registration> DeleteEventAttendeRegistration(Event_Attendee_Registration event_Attendee_Registration)
         {
-            throw new NotImplementedException();
+            event_Attendee_Registration.deleted = true;
+            _db.event_Attendee_Registration.Update(event_Attendee_Registration);
+            await _db.SaveChangesAsync();
+            return event_Attendee_Registration;
         }
+        
 
     }
 }

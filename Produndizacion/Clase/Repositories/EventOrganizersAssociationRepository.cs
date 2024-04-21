@@ -54,11 +54,15 @@ namespace Clase.Repositories
         {
             _db.eventOrganizerAssociation.Update(eventOrganizerAssociation);
             await _db.SaveChangesAsync();
-            throw new NotImplementedException();
+            return eventOrganizerAssociation;
         }
         public async Task<EventOrganizerAssociation> DeleteEventOrganizersAssociation(EventOrganizerAssociation eventOrganizerAssociation)
         {
+            eventOrganizerAssociation.deleted = true;
+            _db.eventOrganizerAssociation.Update(eventOrganizerAssociation);
+            await _db.SaveChangesAsync();
             return eventOrganizerAssociation;
+            
         }
     }
     

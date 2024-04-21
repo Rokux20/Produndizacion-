@@ -46,10 +46,15 @@ namespace Clase.Services
                 room.MaxCapacity = (int)MaxCapacity;
             }
             return await _roomsRepository.UpdateRoom(room);
-        }
+        } 
         public async Task<Rooms> DeleteRoom(Rooms room)
         {
-            return await _roomsRepository.DeleteRoom(room);
+           Rooms rooms = await _roomsRepository.GetById(room.IdRoom);
+            if (rooms == null)
+            {
+                throw new Exception("Room not found");
+            }
+            return await _roomsRepository.DeleteRoom(rooms);
         }
     }
 }

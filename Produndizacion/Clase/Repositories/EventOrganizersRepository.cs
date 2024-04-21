@@ -52,11 +52,14 @@ namespace Clase.Repositories
         {
             _db.event_Organizers.Update(eventOrganizer);
             await _db.SaveChangesAsync();
-            throw new NotImplementedException();
+            return eventOrganizer;
         }
         public async Task<Event_Organizers> DeleteEventOrganizer(Event_Organizers eventOrganizer)
         {
-            throw new NotImplementedException();
+            eventOrganizer.deleted = true;
+            _db.event_Organizers.Update(eventOrganizer);    
+            await _db.SaveChangesAsync();
+            return eventOrganizer;
         }
     }
 }

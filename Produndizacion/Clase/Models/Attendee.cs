@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace Clase.Models
 {
@@ -13,13 +14,11 @@ namespace Clase.Models
         public string Email { get; set; }
         public string Phone { get; set; }
 
-        public bool deleted { get; set; }
+        public bool deleted = false;
 
-        public List<Event_Attendee_Registration> event_Attendee_Registration  { get; set; }
-
-        public  List<RoomAttendeeRegistration> roomAttendeeRegistration { get; set; }
+    }
 
     }
 
    
-}
+

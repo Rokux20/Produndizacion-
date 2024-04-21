@@ -53,12 +53,15 @@ namespace Clase.Repositories
         {
             _db.events.Update(events);
             await _db.SaveChangesAsync();
-            throw new NotImplementedException();
+            return events;
         }
 
         public async Task<Events> DeleteEvent(Events events)
         {
            
+            events.deleted = true;
+            _db.events.Update(events);
+            await _db.SaveChangesAsync();
             return events;
         }
     }

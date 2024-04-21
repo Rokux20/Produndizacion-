@@ -10,11 +10,14 @@ namespace Clase.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdEventOrg { get; set; }
 
+        [ForeignKey("IdEvents")]  // Añadir esta anotación para configurar la relación con Attendee
+        public int IdEvents { get; set; }
 
-        public int IdEvents { get; set; }   
-        public Events events { get; set; } /// llave foranea 
+        [ForeignKey("IdOrganizer")]  // Añadir esta anotación para configurar la relación con Attendee
         public int IdOrganizer { get; set; }
-        public Event_Organizers event_Organizers { get; set; } /// llave foranea 
+
+        public bool deleted = false;
+
 
 
 
