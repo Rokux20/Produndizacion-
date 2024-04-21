@@ -4,7 +4,6 @@ using Clase.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -12,11 +11,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Clase.Migrations
 {
     [DbContext(typeof(ProyectbContext))]
-    [Migration("20240228152534_migracion1")]
-    partial class migracion1
+    partial class ProyectbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,6 +90,9 @@ namespace Clase.Migrations
                     b.Property<int>("IdEvents")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("attendeeIdAttendee")
                         .HasColumnType("int");
 
@@ -160,11 +160,11 @@ namespace Clase.Migrations
 
             modelBuilder.Entity("Clase.Models.RoomAttendeeRegistration", b =>
                 {
-                    b.Property<int>("IdRegistration")
+                    b.Property<int>("IdAttendeeR")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdRegistration"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdAttendeeR"));
 
                     b.Property<int>("IdAttendee")
                         .HasColumnType("int");
@@ -181,7 +181,7 @@ namespace Clase.Migrations
                     b.Property<int?>("roomsIdRoom")
                         .HasColumnType("int");
 
-                    b.HasKey("IdRegistration");
+                    b.HasKey("IdAttendeeR");
 
                     b.HasIndex("attendeeIdAttendee");
 

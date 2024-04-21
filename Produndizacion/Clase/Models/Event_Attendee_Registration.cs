@@ -14,11 +14,11 @@ namespace Clase.Models
 
         public Attendee attendee { get; set; } /// llave foranea  de Attendee
 
-        public int IdEvents { get; private set; }
+        public int IdEvents { get;  set; }
         
         public Events events { get; set; }  //llave foranea de Events
 
-        public DateTime RegistrationDate { get;}
+        public DateTime RegistrationDate { get; set; }
     }
     
 }

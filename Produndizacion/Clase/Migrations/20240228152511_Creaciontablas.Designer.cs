@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Clase.Migrations
 {
-    [DbContext(typeof(TypesDevicesDbContext))]
+    [DbContext(typeof(ProyectbContext))]
     [Migration("20240228152511_Creaciontablas")]
     partial class Creaciontablas
     {

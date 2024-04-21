@@ -1,49 +1,65 @@
-﻿using Clase.Models;
-    
-    namespace Clase.Repositories
+﻿using Clase.Context;
+using Clase.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Clase.Repositories
 
 {
 
     public interface IEventOrganizersAssociationRepository
     {
-        List<EventOrganizerAssociation> GetAll();
-        List<EventOrganizerAssociation> Get(int id);
+        Task<List<EventOrganizerAssociation>> GetAll();
+        Task<EventOrganizerAssociation> GetById(int id);
+        Task<EventOrganizerAssociation> CreateEventOrganizersAssociation( int IdEvents, int IdOrganizer);
+        Task<EventOrganizerAssociation> UpdateEventOrganizersAssociation(EventOrganizerAssociation eventOrganizerAssociation);
+        Task<EventOrganizerAssociation> DeleteEventOrganizersAssociation(EventOrganizerAssociation eventOrganizerAssociation);
 
-
-        void CreateEventOrganizersAssociation(EventOrganizerAssociation eventOrganizerAssociation);
-        void UpdateEventOrganizersAssociation(int id, EventOrganizerAssociation eventOrganizerAssociation);
-        void DeleteEventOrganizersAssociation(int id);
+     
 
     }
 
     public class EventOrganizersAssociationRepository: IEventOrganizersAssociationRepository
     {
-        public void CreateEventOrganizersAssociation(EventOrganizerAssociation eventOrganizerAssociation)
+        private readonly ProyectbContext _db;
+
+        public EventOrganizersAssociationRepository(ProyectbContext db)
         {
-            throw new NotImplementedException();
+            _db = db;
         }
 
-        public void DeleteEventOrganizersAssociation(int id)
+        public async Task<EventOrganizerAssociation> CreateEventOrganizersAssociation( int IdEvents, int IdOrganizer)
         {
-            throw new NotImplementedException();
+            EventOrganizerAssociation newEventOrganizersAssociation = new EventOrganizerAssociation
+            {
+                
+                IdEvents = IdEvents,
+                IdOrganizer = IdOrganizer
+            };
+
+            await _db.eventOrganizerAssociation.AddAsync(newEventOrganizersAssociation);
+            _db.SaveChanges();
+
+            return newEventOrganizersAssociation;
         }
 
-        public List<EventOrganizerAssociation> GetAll()
+        public async Task<List<EventOrganizerAssociation>> GetAll()
         {
+            return await _db.eventOrganizerAssociation.ToListAsync();
+        }
+        public async Task<EventOrganizerAssociation> GetById(int id)
+        {
+            return await _db.eventOrganizerAssociation.FirstOrDefaultAsync(x => x.IdEventOrg == id);
+        }
+        public async Task<EventOrganizerAssociation> UpdateEventOrganizersAssociation(EventOrganizerAssociation eventOrganizerAssociation)
+        {
+            _db.eventOrganizerAssociation.Update(eventOrganizerAssociation);
+            await _db.SaveChangesAsync();
             throw new NotImplementedException();
         }
-
-        public List<EventOrganizerAssociation> Get(int id)
+        public async Task<EventOrganizerAssociation> DeleteEventOrganizersAssociation(EventOrganizerAssociation eventOrganizerAssociation)
         {
-            throw new NotImplementedException();
+            return eventOrganizerAssociation;
         }
-
-        public void UpdateEventOrganizersAssociation(int id, EventOrganizerAssociation eventOrganizerAssociation)
-        {
-            throw new NotImplementedException();
-        }
-    
-
     }
     
 }

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Clase.Migrations
 {
-    [DbContext(typeof(TypesDevicesDbContext))]
+    [DbContext(typeof(ProyectbContext))]
     [Migration("20240228173459_Actualizarcampos")]
     partial class Actualizarcampos
     {

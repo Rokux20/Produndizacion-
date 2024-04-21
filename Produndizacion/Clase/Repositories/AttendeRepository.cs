@@ -1,4 +1,7 @@
-﻿using Clase.Models;
+﻿using Azure.Core;
+using Clase.Context;
+using Clase.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;  
 
 namespace Clase.Repositories
@@ -6,40 +9,62 @@ namespace Clase.Repositories
 
     public interface IAttendeeRepository
     {
-        List<Attendee> GetAll();
-        List<Attendee> GetByFirstName(int id);
-
-        void CreateAttendee (Attendee attendee);
-        void UpdateAttendee (int id, Attendee attendee);
-        void DeleteAttendee (int id);
+        Task<List<Attendee>> GetAll();
+        Task<Attendee> GetById(int id);
+        Task<Attendee> CreateAttendee(string First_name, string Last_name, string email, string phone);
+        Task<Attendee> UpdateAttendee(Attendee attendee);
+        Task<Attendee> DeleteAttendee(Attendee attendee);
     }
 
 
     public class AttendeRepository : IAttendeeRepository
     {
-        public void CreateAttendee(Attendee attendee)
+        private readonly ProyectbContext _db;
+
+        public AttendeRepository(ProyectbContext db)
         {
-            throw new NotImplementedException();
+            _db = db;
         }
 
-        public void DeleteAttendee(int id)
+        public async Task<Attendee> CreateAttendee(string First_name, string Last_name, string email, string phone)
         {
-            throw new NotImplementedException();
+            Attendee  newAttendee = new Attendee
+            {
+                First_Name = First_name,
+                Last_Name = Last_name,
+                Email = email,
+                Phone = phone
+            };
+
+                await _db.attendee.AddAsync(newAttendee);
+                _db.SaveChanges();
+
+            return newAttendee;
         }
 
-        public List<Attendee> GetAll()
+        public async Task<List<Attendee>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _db.attendee.ToListAsync();
+        }
+        public async Task<Attendee> GetById(int id)
+        {
+            return await _db.attendee.FirstOrDefaultAsync(x => x.IdAttendee == id);
+        }
+        
+        public async Task<Attendee> UpdateAttendee(Attendee attendee)
+        {
+            _db.attendee.Update(attendee);
+            await _db.SaveChangesAsync();
+            return attendee;
+        }
+        public async Task<Attendee> DeleteAttendee(Attendee attendee)
+        {
+            
+            attendee.deleted = true;
+            _db.attendee.Update(attendee);
+            await _db.SaveChangesAsync();
+            return attendee;
         }
 
-        public List<Attendee> GetByFirstName(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateAttendee(int id, Attendee attendee)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

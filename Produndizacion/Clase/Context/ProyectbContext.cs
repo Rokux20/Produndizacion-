@@ -3,7 +3,7 @@ using Clase.Models;
 
 namespace Clase.Context
 {
-    public class TypesDevicesDbContext:DbContext
+    public class ProyectbContext : DbContext
     {
 
         public DbSet<Attendee> attendee { get; set; }
@@ -15,7 +15,7 @@ namespace Clase.Context
         public DbSet<RoomAttendeeRegistration> roomAttendeeRegistration {  get; set; }
         public DbSet<Rooms> rooms { get; set; }
 
-        public TypesDevicesDbContext(DbContextOptions options) : base(options) 
+        public ProyectbContext(DbContextOptions options) : base(options) 
         { 
         
         }

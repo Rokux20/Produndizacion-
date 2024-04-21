@@ -4,16 +4,19 @@ using Clase.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace Clase.Migrations
 {
-    [DbContext(typeof(TypesDevicesDbContext))]
-    partial class TypesDevicesDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ProyectbContext))]
+    [Migration("20240417132355_prueba1111")]
+    partial class prueba1111
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,6 +92,9 @@ namespace Clase.Migrations
 
                     b.Property<int>("IdEvents")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("attendeeIdAttendee")
                         .HasColumnType("int");
